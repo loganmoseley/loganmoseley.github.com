@@ -36,9 +36,8 @@ p.right { text-align:right; }
 h1 {
 	padding:20px 50px;
 	font-size:2.1em;
-	font-family:"Georgia", Times, serif;
-	font-style: italic;
-	
+	font-family:Times, serif;
+	font-style:italic;	
 }
 
 h2 {
@@ -46,6 +45,7 @@ h2 {
 	font-size:1.5em;
 	margin-right:10px;
 	padding-bottom:5px;
+	overflow:visible;
 }
 
 ol, ul {
@@ -86,7 +86,6 @@ a:hover { color:#444 }
 
 #header {
 	margin-top:10px;
-	overflow:visible;
 }
 
 #banner {
@@ -102,6 +101,8 @@ a:hover { color:#444 }
 	border:1px solid #009dff;
 	margin:5px 0;
 	padding:10px;
+	
+	letter-spacing:-1px;
 	color:white;
 }
 
@@ -113,9 +114,8 @@ a:hover { color:#444 }
 }
 
 .pageWidth {
-	width:700px;
+	width:550px;
 	margin:0 auto;
-	overflow:visible;
 }
 
 
@@ -123,8 +123,16 @@ a:hover { color:#444 }
 
 #menu {
 	background:#009dff;/*F3F781;*/
+	color:white;
+	
 	border:2px solid #009dff;
-	margin:0 0 5px;
+	margin:0 0 5px 0;
+	padding:8px 0 10px 0;
+	
+	/*overflow-x:none;
+	overflow-y:auto;*/
+	overflow:hidden !important;
+	width:700px;
 }
 
 #menu ul {
@@ -132,8 +140,6 @@ a:hover { color:#444 }
 }
 
 #menu a {
-	float:left;
-	clear:none;
 	padding:8px 20px 3px;
 	text-decoration:none;
 	color:white;
@@ -160,7 +166,6 @@ a:hover { color:#444 }
 #menu.secondary {
 	background:#009dff;
 	border:2px solid #009dff;
-	overflow:visible;/**/
 }
 
 #menu.secondary ul {
@@ -172,11 +177,9 @@ a:hover { color:#444 }
 #menu.secondary li {
 	border-left:1px solid #CEF6F5;
 	border-right:1px solid #CEF6F5;
-	background-color:0%;
 	float:left;
 	clear:none;
 	margin:0 auto;
-	overflow:visible;
 }
 
 #menu.secondary li.active,
@@ -201,6 +204,7 @@ a:hover { color:#444 }
 	/*border-top:1px solid #446348;*/
 	text-align:left;
 	margin:0 auto;
+	overflow:visible;`
 }
 
 #left {
@@ -209,7 +213,6 @@ a:hover { color:#444 }
 	width:40%;
 	margin:0px;
 	padding:15px;
-	overflow:visible;
 }
 
 #right {
@@ -219,20 +222,19 @@ a:hover { color:#444 }
 	text-align:center;
 	margin:0px;
 	padding:15px;
-	overflow:visible;
 }
 
 div.total {
 	float:left;
 	clear:none;
-	width:auto;
+	width:100%;
 	margin:0;
-	padding:15px;
+	padding:15px 0;
 }
 
-ul.imageGrid li {	
+.imageGrid li {	
 	float:left;
 	clear:none;
 	margin:0 auto;
-	padding:20px;
+	padding:0px;
 }
