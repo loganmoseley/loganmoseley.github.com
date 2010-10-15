@@ -99,7 +99,8 @@ a:hover { color:#444 }
 #footer {
 	background-color:#009dff;
 	border:1px solid #009dff;
-	margin:5px 0;
+	margin-top:5px;
+	margin-bottom:5px;
 	padding:10px;
 	
 	letter-spacing:-1px;
@@ -125,77 +126,63 @@ a:hover { color:#444 }
 	background:#009dff;/*F3F781;*/
 	color:white;
 	
-	border:2px solid #009dff;
 	margin:0 0 5px 0;
-	padding:8px 0 10px 0;
+	border:2px solid #009dff;
+	padding:8px 0 10px 0;/**/
 	
 	/*overflow-x:none;
 	overflow-y:auto;*/
-	overflow:hidden !important;
+	overflow:hidden !important;/**/
 	width:700px;
-}
-
-#menu ul {
-	/*background:#cccccc;/**/
+	
+	text-transform:lowercase;
 }
 
 #menu a {
-	padding:8px 20px 3px;
+	padding:8px 20px 3px;/**/
 	text-decoration:none;
 	color:white;
 }
 
-#menu a.active {
-	border-bottom:5px solid white;
-	color:white;
-}
-	#menu a.active:hover { border-bottom:5px solid white; }
+	#menu a.active {
+		border-bottom:5px solid white;
+		color:white;
+	}
+		#menu a.active:hover { border-bottom:5px solid white; }
 
-#menu a:hover {
-	border-bottom:1px solid white;
-	color:white;
-}
-
-#menu ul li {
-	float:left;
-}
+	#menu a:hover {
+		border-bottom:1px solid white;
+		color:white;
+	}
 
 
 /* Menu - Secondary */
 
 #menu.secondary {
 	background:#009dff;
+	
 	border:2px solid #009dff;
-}
-
-#menu.secondary ul {
-	/*width:420px;
-	 margin:0 auto;
-	 background:#cccccc;/**/
-}
-
-#menu.secondary li {
-	border-left:1px solid #CEF6F5;
-	border-right:1px solid #CEF6F5;
-	float:left;
-	clear:none;
-	margin:0 auto;
-}
-
-#menu.secondary li.active,
-#menu.secondary li:hover {
-	border-left:1px solid #d1c786;
-	border-right:1px solid #d1c786;
-	background-color:#FFFFFF;
+	padding: 5px 0 7px 0;
+	
+	font-size:0.95em;
 }
 
 #menu.secondary a {
 	padding:4px 20px 2px;
 }
 
-#menu.secondary a.active {
-	border-bottom:3px solid white;
-}
+	#menu.secondary a.active {
+		border-bottom:3px solid white;
+		color:white;
+	}
+		#menu.secondary a.active:hover { border-bottom:3px solid white; }
+
+	#menu.secondary a:hover {
+		border-bottom:1px solid white;
+		color:white;
+	}
+
+
 
 /* Main */
 
