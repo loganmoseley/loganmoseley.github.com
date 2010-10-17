@@ -75,7 +75,7 @@ a {
 
 a:hover { color:#444 }
 
-.box_textshadow {
+.text_dropshadow {
 	text-shadow: 1px 1px 1px #ccc; 
 }
 
