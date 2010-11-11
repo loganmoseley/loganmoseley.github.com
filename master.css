@@ -207,11 +207,15 @@ a:hover { color:#444 }
 		margin-top:10px;
 		margin-bottom:10px;
 	}
+	
+	#content .left {
+		margin-left:10px;
+	}
 
 .left {
 	float:left;
 	clear:none;
-	/*width:40%;/**/
+	/*width:60%;/**/
 }
 
 .right {
@@ -229,6 +233,14 @@ img {
 	-webkit-box-shadow: 1px 1px 3px #000;
 	box-shadow: 1px 1px 3px #000;
 }
+
+	img.plain {
+		border:0;
+		border-radius:0;
+		-moz-box-shadow:0 0 0 0;
+		-webkit-box-shadow:0 0 0 0;
+		box-shadow:0 0 0 0;
+	}
 
 .imageGrid { margin:5px auto; }
 .imageGrid img {	
