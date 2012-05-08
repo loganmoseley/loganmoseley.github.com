@@ -17,5 +17,9 @@ build/*
 # OSX extras
 .DS_Store
 profile
-Icon
+Icon
+
 # The two line breaks before me MUST be respected in order for it to correctly ignore the custom folder icon.
+
+# Binary files
+*.zip
