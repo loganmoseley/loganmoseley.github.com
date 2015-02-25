@@ -1,20 +1,20 @@
 [
     {
-        "title": "App Updated",
+        "title": "App Updated (NETWORK DS)",
         "message": "New shiny! Pull to explore.",
         "URL": "http://www.nytimes.com",
         "idleTimeout": 3,
         "style": 1
     },
     {
-        "title": "The Apple",
+        "title": "The Apple (NETWORK DS)",
         "message": "She barks alone at rooftops of Dust City.",
         "URL": "http://loganmoseley.com/nytimes/Crossword-2.2.0.html",
         "idleTimeout": 3,
         "style": 0
     },
     {
-        "title": "Moby Dick",
+        "title": "Moby Dick (NETWORK DS)",
         "message": "Chapter One",
         "idleTimeout": 3,
         "style": 2,
