@@ -1,0 +1,55 @@
+==================================================================
+https://keybase.io/loganmoseley
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://loganmoseley.com
+  * I am loganmoseley (https://keybase.io/loganmoseley) on keybase.
+  * I have a public key ASAqZ07I9TVwSRKWycoYjTWsAYO2Yiuvl45MZivPkHkqJgo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01202a674ec8f53570491296c9ca188d35ac0183b6622baf978e4c662bcf90792a260a",
+      "host": "keybase.io",
+      "kid": "01202a674ec8f53570491296c9ca188d35ac0183b6622baf978e4c662bcf90792a260a",
+      "uid": "4e11629cea4f756abdd64c3cb9400c19",
+      "username": "loganmoseley"
+    },
+    "merkle_root": {
+      "ctime": 1520025527,
+      "hash": "cd8e6536403d6d5502a9563bc37c40057a26aab1580b7c5ac7ea913f7fc9fbc6bbd0b8305e81b205bbd163ecb242cf0e2272ca1245e644f2fb4a284a42810c9c",
+      "hash_meta": "67f6778e4d819922474b530b002881b0215187792a3e16b665f9bc2bbcc44c1b",
+      "seqno": 2177745
+    },
+    "service": {
+      "hostname": "loganmoseley.com",
+      "protocol": "http:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.44"
+  },
+  "ctime": 1520025557,
+  "expire_in": 504576000,
+  "prev": "7a868643b7f60974ec385e628a3ccb8c33effb6c8a17649a636e919723a501d4",
+  "seqno": 14,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgKmdOyPU1cEkSlsnKGI01rAGDtmIrr5eOTGYrz5B5KiYKp3BheWxvYWTFA0x7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwMmE2NzRlYzhmNTM1NzA0OTEyOTZjOWNhMTg4ZDM1YWMwMTgzYjY2MjJiYWY5NzhlNGM2NjJiY2Y5MDc5MmEyNjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwMmE2NzRlYzhmNTM1NzA0OTEyOTZjOWNhMTg4ZDM1YWMwMTgzYjY2MjJiYWY5NzhlNGM2NjJiY2Y5MDc5MmEyNjBhIiwidWlkIjoiNGUxMTYyOWNlYTRmNzU2YWJkZDY0YzNjYjk0MDBjMTkiLCJ1c2VybmFtZSI6ImxvZ2FubW9zZWxleSJ9LCJtZXJrbGVfcm9vdCI6eyJjdGltZSI6MTUyMDAyNTUyNywiaGFzaCI6ImNkOGU2NTM2NDAzZDZkNTUwMmE5NTYzYmMzN2M0MDA1N2EyNmFhYjE1ODBiN2M1YWM3ZWE5MTNmN2ZjOWZiYzZiYmQwYjgzMDVlODFiMjA1YmJkMTYzZWNiMjQyY2YwZTIyNzJjYTEyNDVlNjQ0ZjJmYjRhMjg0YTQyODEwYzljIiwiaGFzaF9tZXRhIjoiNjdmNjc3OGU0ZDgxOTkyMjQ3NGI1MzBiMDAyODgxYjAyMTUxODc3OTJhM2UxNmI2NjVmOWJjMmJiY2M0NGMxYiIsInNlcW5vIjoyMTc3NzQ1fSwic2VydmljZSI6eyJob3N0bmFtZSI6ImxvZ2FubW9zZWxleS5jb20iLCJwcm90b2NvbCI6Imh0dHA6In0sInR5cGUiOiJ3ZWJfc2VydmljZV9iaW5kaW5nIiwidmVyc2lvbiI6MX0sImNsaWVudCI6eyJuYW1lIjoia2V5YmFzZS5pbyBnbyBjbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjQ0In0sImN0aW1lIjoxNTIwMDI1NTU3LCJleHBpcmVfaW4iOjUwNDU3NjAwMCwicHJldiI6IjdhODY4NjQzYjdmNjA5NzRlYzM4NWU2MjhhM2NjYjhjMzNlZmZiNmM4YTE3NjQ5YTYzNmU5MTk3MjNhNTAxZDQiLCJzZXFubyI6MTQsInRhZyI6InNpZ25hdHVyZSJ9o3NpZ8RAfihlBP0pUbIsSN3sugd+MfQ/eP/YfuDcrkq2+hF8ZQMXei7BKx9dRWoziK4t8mSSDNVlrkT7YSMN9UYVVhi6AahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIEX6VmhmtfO+4E3EixdOmJVFbmvThsOUS5Dl0NVGrGaWo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/loganmoseley
+
+==================================================================
