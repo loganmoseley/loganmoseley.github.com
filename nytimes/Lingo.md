@@ -1,33 +1,49 @@
 # Objective-C Lingo
 
-## Method Parameter
-
-### With
-
-Parameter is ready.
-
-Parameter is used as-is in the return value. "With" is used in a method signature to express a parameter that is ready to be combined with other assumed/implicit information to yield the result.
-
-    + (NSString *)favoriteDayTextWithWeekday:(NSString *)weekday;
-    $ @"Tuesday" >> @"My favorite day is Tuesday!"
-
-### From
-
-Parameter is not ready.
-
-Parameter must be transformed before being used in the return value. "From" is used in a method signature to express a parameter that is transformed or coerced into another value, and may or may not then be combined with other assumed/implicit information.
-
-    + (NSDate *)nextNoonDateFromWeekday:(NSString *)weekday;
-    $ @"Tuesday" >> 2014-10-21 12:00:00
+## Method Parameters
 
 ### For
 
-Parameter as predicate.
+Parameters as predicate.
 
-"For" is used in a method signature to express a predicate-style parameter.
+"For" is used in a method signature to express predicate-style parameters. The result is filtered, based on the parameters.
 
-    - (NSArray *)weekdaysForInitialLetter:(NSString *)letter;
-    $ @"T" >> @[@"Tuesday", @"Thursday"]
+```
+- (ObjectType)objectForKey:(KeyType)key;
+
+NSDictionary *fruitsByColor = @{@"green": kiwi, @"red": raspberry};
+Fruit *greenFruit = [fruitsByColor objectForKey:@"green"];
+// greenFruit == kiwi
+```
+
+### From
+
+Parameters are necessary and sufficient.
+
+"From" is used in a method signature to express that the parameter or parameters are sufficient to describe the output. The parameters are likely transformed or coerced into other values or presentations, but may not be combined with other information. The parameters are the only changing factors in the method.
+
+```
+NSString *NSStringFromCGPoint(CGPoint point);
+
+CGPoint xyPoint = {13, 42};
+NSString *xyString = NSStringFromCGPoint(xyPoint);
+// xyString == @"{13, 42}"
+```
+
+### With
+
+Parameters are necessary, but not sufficient.
+
+"With" is used in a method signature to express that the parameter or parameters are necessary to the output, but insufficient to fully describe the output. That is, they will be combined with other assumed/implicit information to yield the result.
+
+```
+- (NSString *)uppercaseStringWithLocale:(NSLocale *)locale;
+
+NSString *keanu = @"Keanu";
+NSLocale *currentLocale = [NSLocale currentLocale];
+NSString *upperKeanu = [keanu uppercaseStringWithLocale:currentLocale];
+// upperKeanu == @"KEANU";
+```
 
 ## Method Signature
 
@@ -35,10 +51,15 @@ Parameter as predicate.
 
 Expresses a **verb**.
 
-    - (BOOL)shouldAutomaticallyForwardRotationMethods;
+```
+- (BOOL)shouldAutomaticallyForwardRotationMethods;
+```
 
 ### wantsXyz
 
 Expresses a **noun**.
 
-    - (BOOL)wantsPushNotifications;
+```
+- (BOOL)wantsPushNotifications;
+```
+
