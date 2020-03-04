@@ -4,8 +4,19 @@
     -->
 <head>
     <style>
+        :root {
+            color-scheme: light dark;
+            --body-color: #222;
+            --title-color: #333;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --body-color: #ddd;
+                --title-color: #ccc;
+            }
+        }
         body {
-            color: #222;
+            color: var(--body-color);
             font-size: 110%;
             margin: auto;
             margin-bottom: 50vh;
@@ -34,7 +45,7 @@
 </head>
 <body>
 
-<h3><a href="https://en.wikipedia.org/wiki/Zeno%27s_paradoxes#Paradoxes_of_motion" style="color: #333">Xena&rsquo;s Paradox</a></h1>
+<h3><a href="https://en.wikipedia.org/wiki/Zeno%27s_paradoxes#Paradoxes_of_motion" style="color: var(--title-color)">Xena&rsquo;s Paradox</a></h1>
 
 <p class="scene">
     EXT. NORSELAND FOREST - NIGHT<br/>
