@@ -44,6 +44,9 @@ function buildWindows() {
         }
     }
 
+    // Markdeep appends the footer to body, outside .md
+    const footer = document.querySelector('.markdeepFooter');
+
     // Header window
     const headerWin = createWindow('Welcome!');
     const headerBody = headerWin.querySelector('.macos9-window-body');
@@ -63,6 +66,13 @@ function buildWindows() {
     while (md.firstChild) md.removeChild(md.firstChild);
     md.appendChild(headerWin);
     sectionWins.forEach(w => md.appendChild(w));
+
+    if (footer) {
+        const container = document.createElement('div');
+        container.id = 'markdeep-footer-container';
+        container.appendChild(footer);
+        md.appendChild(container);
+    }
 }
 
 function buildMenuBar() {
@@ -428,7 +438,15 @@ em.underscore {
 .md table.table tr:nth-child(even) { background: none; }
 .md table.table td { background: none; border: none; padding-bottom: 0; padding-top: 2px; }
 
-.markdeepFooter { display: none; }
+.markdeepFooter {
+    color: #ffffff;
+    padding-top: 0px;
+    padding-right: 4px;
+}
+
+.markdeepFooter a {
+    color: #ccccff !important;
+}
 
 `;
     document.head.appendChild(style);
