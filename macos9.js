@@ -3,7 +3,10 @@ window.markdeepOptions = {
     tocStyle: 'none'
 };
 
-// ─── Mac OS 9 window builder ──────────────────────────────────────────────────
+// Public API — page-specific scripts call these after macos9:ready
+window.macos9 = {};
+
+// ─── Window builder ───────────────────────────────────────────────────────────
 
 function createWindow(title) {
     const win = document.createElement('div');
@@ -27,13 +30,91 @@ function createWindow(title) {
     });
     return win;
 }
+window.macos9.createWindow = createWindow;
+
+// ─── Draggable floating windows ───────────────────────────────────────────────
+
+function makeDraggable(win) {
+    const titlebar = win.querySelector('.macos9-window-titlebar');
+
+    titlebar.addEventListener('mousedown', e => {
+        if (e.target.closest('button')) return;
+        e.preventDefault();
+
+        if (win.style.transform) {
+            const r = win.getBoundingClientRect();
+            win.style.transform = '';
+            win.style.left = r.left + 'px';
+            win.style.top  = r.top  + 'px';
+        }
+
+        const ox = e.clientX - win.getBoundingClientRect().left;
+        const oy = e.clientY - win.getBoundingClientRect().top;
+
+        const onMove = e => {
+            win.style.left = (e.clientX - ox) + 'px';
+            win.style.top  = (e.clientY - oy) + 'px';
+        };
+        const onUp = () => {
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup',   onUp);
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup',   onUp);
+    });
+}
+window.macos9.makeDraggable = makeDraggable;
+
+// ─── Finder-style icon window ─────────────────────────────────────────────────
+//
+// files: [{ label, href, fold }]  — fold is the dog-ear color
+
+window.macos9.openFinderWindow = function(id, title, files) {
+    const existing = document.getElementById(id);
+    if (existing) { existing.style.display = ''; return; }
+
+    const win = createWindow(title);
+    win.id = id;
+    win.classList.add('macos9-window-floating');
+    Object.assign(win.style, {
+        position:  'fixed',
+        top:       '50%',
+        left:      '50%',
+        transform: 'translate(-50%, -50%)',
+        width:     '360px',
+        zIndex:    '10000',
+    });
+
+    win.querySelector('button').addEventListener('click', () => win.remove());
+
+    const body = win.querySelector('.macos9-window-body');
+    const grid = document.createElement('div');
+    grid.className = 'finder-icon-grid';
+    for (const f of files) {
+        const a = document.createElement('a');
+        a.className = 'finder-icon';
+        a.href = f.href;
+        a.innerHTML = `
+            <svg class="finder-doc-icon" width="40" height="48" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 2 L26 2 L38 14 L38 46 L2 46 Z" fill="white" stroke="#333" stroke-width="1.5"/>
+                <path d="M26 2 L26 14 L38 14" fill="${f.fold}" stroke="#333" stroke-width="1.5"/>
+            </svg>
+            <span class="finder-label">${f.label}</span>
+        `;
+        grid.appendChild(a);
+    }
+    body.appendChild(grid);
+
+    makeDraggable(win);
+    document.body.appendChild(win);
+};
+
+// ─── Markdeep → windows ───────────────────────────────────────────────────────
 
 function buildWindows() {
     const md = document.querySelector('.md');
     if (!md) return;
 
-    // Collect direct children before the first section (header content)
-    // and all h1-sections (one window each).
     const headerNodes = [];
     const sections = [];
     for (const child of Array.from(md.childNodes)) {
@@ -44,25 +125,21 @@ function buildWindows() {
         }
     }
 
-    // Markdeep appends the footer to body, outside .md
     const footer = document.querySelector('.markdeepFooter');
 
-    // Header window
-    const headerWin = createWindow('Welcome!');
-    const headerBody = headerWin.querySelector('.macos9-window-body');
-    headerNodes.forEach(n => headerBody.appendChild(n));
+    const headerTitle = (window.macos9Config && window.macos9Config.headerTitle) || '';
+    const headerWin = createWindow(headerTitle);
+    headerNodes.forEach(n => headerWin.querySelector('.macos9-window-body').appendChild(n));
 
-    // One window per section; pull the h1 text for the titlebar then remove it
     const sectionWins = sections.map(section => {
-        const h1 = section.querySelector('h1, h2');
-        const title = h1 ? h1.textContent.trim() : '';
-        if (h1) h1.remove();
+        const heading = section.querySelector('h1, h2');
+        const title = heading ? heading.textContent.trim() : '';
+        if (heading) heading.remove();
         const win = createWindow(title);
         win.querySelector('.macos9-window-body').appendChild(section);
         return win;
     });
 
-    // Replace md content with the windows
     while (md.firstChild) md.removeChild(md.firstChild);
     md.appendChild(headerWin);
     sectionWins.forEach(w => md.appendChild(w));
@@ -74,6 +151,8 @@ function buildWindows() {
         md.appendChild(container);
     }
 }
+
+// ─── Menu bar ─────────────────────────────────────────────────────────────────
 
 function buildMenuBar() {
     const bar = document.createElement('div');
@@ -99,34 +178,25 @@ function buildMenuBar() {
     setInterval(tick, 1000);
 }
 
+// ─── Boot ─────────────────────────────────────────────────────────────────────
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Watch for Markdeep to create .md, then build windows and reveal
     const obs = new MutationObserver((_, observer) => {
         if (document.querySelector('.md')) {
             observer.disconnect();
             buildWindows();
             buildMenuBar();
             document.body.style.visibility = 'visible';
+            document.dispatchEvent(new CustomEvent('macos9:ready'));
         }
     });
     obs.observe(document.body, { childList: true, subtree: true });
 
-    // Inject Markdeep dynamically — body exists now, so it won't get null
     const s = document.createElement('script');
     s.src = 'markdeep.min.js';
     s.charset = 'utf-8';
     document.body.appendChild(s);
 });
-
-// ─── Favicon ─────────────────────────────────────────────────────────────────
-
-{
-    const link = document.createElement('link');
-    link.rel = 'icon';
-    link.type = 'image/png';
-    link.href = 'images/favicon.png';
-    document.head.appendChild(link);
-}
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 
@@ -155,10 +225,6 @@ body {
     gap: 0;
     padding: 20px 10px 60px;
     min-height: 100vh;
-
-    // Markdeep sets 680px by default, which seems good to me.
-    // I'm leaving this as a reminder to myself, just in case.
-    // max-width: 680px;
 }
 
 /* ── Menu bar ── */
@@ -248,6 +314,10 @@ span.md {
     gap: 4px;
     align-items: center;
     user-select: none;
+}
+
+.macos9-window-floating .macos9-window-titlebar {
+    cursor: move;
 }
 
 .macos9-window-titlebar > span.filler {
@@ -369,78 +439,55 @@ span.md {
     padding: 14px 18px;
 }
 
-.macos9-window-body section.h1-section {
+.macos9-window-body section.h1-section,
+.macos9-window-body section.h2-section {
     margin: 0;
     padding: 0;
 }
 
-/* ── Content within windows ── */
-.macos9-window-body .title {
-    font-size: 1.4em !important;
-    font-weight: bold;
-    font-family: Palatino, 'Palatino Linotype', Georgia, serif !important;
-    text-align: left !important;
-    margin-bottom: 2px;
-    padding-top: 0px !important;
+/* ── Finder icon grid ── */
+.finder-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 12px 8px;
 }
 
-.macos9-window-body .subtitle {
-    text-align: center;
-    margin-bottom: 6px;
-}
-
-.macos9-window-body .afterTitles {
-    display: none;
-}
-
-.md h1, .md h2 { display: none; }
-
-.md p {
-    text-align: left;
-    margin: 12px 0;
-}
-.md p:has(em.asterisk) {
+.finder-icon {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 4px;
+    text-decoration: none;
+    color: #000;
+    border-radius: 2px;
 }
 
-.md hr {
-    border-color: #ccc;
-    border-width: 0.5px;
+.finder-icon:hover {
+    background-color: #336699;
+    color: #fff;
 }
 
-.md ul {
-    margin-top: -4px;
-    padding-left: 20px;
+.finder-icon:hover .finder-doc-icon path[fill="white"] {
+    fill: #eef;
 }
 
-.md ul li.minus {
-    margin-left: 0;
-    padding-bottom: 4px;
+.finder-label {
+    font-size: 10px !important;
+    text-align: center;
+    line-height: 1.3;
+    word-break: break-all;
 }
 
-em.asterisk {
-    font-style: normal;
-    font-weight: bold;
-    margin-right: auto;
+/* ── Markdeep footer ── */
+#markdeep-footer-container {
+    display: flex;
+    justify-content: flex-end;
 }
-
-em.underscore {
-    font-style: normal;
-    color: #555;
-    padding-left: 12px;
-}
-
-.md a { color: #202a87; }
-
-.md table { page-break-inside: auto; }
-.md table.table tr { vertical-align: top; }
-.md table.table th { color: #000; background: none; border: none; padding-bottom: 2px; }
-.md table.table tr:nth-child(even) { background: none; }
-.md table.table td { background: none; border: none; padding-bottom: 0; padding-top: 2px; }
 
 .markdeepFooter {
     color: #ffffff;
-    padding-top: 0px;
     padding-right: 4px;
 }
 
@@ -458,4 +505,3 @@ em.underscore {
     style.innerHTML = 'body{visibility:hidden}';
     document.head.appendChild(style);
 }
-
