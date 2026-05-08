@@ -54,7 +54,7 @@ function buildWindows() {
 
     // One window per section; pull the h1 text for the titlebar then remove it
     const sectionWins = sections.map(section => {
-        const h1 = section.querySelector('h1');
+        const h1 = section.querySelector('h1, h2');
         const title = h1 ? h1.textContent.trim() : '';
         if (h1) h1.remove();
         const win = createWindow(title);
