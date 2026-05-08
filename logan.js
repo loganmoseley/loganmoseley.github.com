@@ -65,12 +65,37 @@ function buildWindows() {
     sectionWins.forEach(w => md.appendChild(w));
 }
 
+function buildMenuBar() {
+    const bar = document.createElement('div');
+    bar.id = 'menubar';
+    bar.innerHTML = `
+        <div id="menubar-left">
+            <button id="menubar-apple">&#xF8FF;</button>
+            <button>File</button>
+            <button>Edit</button>
+            <button>View</button>
+        </div>
+        <div id="menubar-right">
+            <button id="menubar-clock"></button>
+        </div>
+    `;
+    document.body.prepend(bar);
+
+    function tick() {
+        document.getElementById('menubar-clock').textContent =
+            new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    }
+    tick();
+    setInterval(tick, 1000);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Watch for Markdeep to create .md, then build windows and reveal
     const obs = new MutationObserver((_, observer) => {
         if (document.querySelector('.md')) {
             observer.disconnect();
             buildWindows();
+            buildMenuBar();
             document.body.style.visibility = 'visible';
         }
     });
@@ -126,12 +151,58 @@ body {
     // max-width: 680px;
 }
 
+/* ── Menu bar ── */
+#menubar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 20px;
+    background-color: #cccccc;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #000000;
+    box-shadow: inset 0 -1px 0 #999999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 9999;
+    padding: 0 4px;
+}
+
+#menubar-left, #menubar-right {
+    display: flex;
+    align-items: center;
+}
+
+#menubar button {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    padding: 1px 7px;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 20px;
+    cursor: default;
+    border-radius: 3px;
+}
+
+#menubar button:active {
+    background-color: #333394;
+    color: #ffffff;
+}
+
+#menubar-apple {
+    font-size: 14px !important;
+    margin-top: 2px;
+    padding: 0 8px !important;
+}
+
 /* Markdeep container becomes the windows column */
 span.md {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 100%;
+    margin-top: 20px;
 }
 
 /* ── Window chrome ── */
