@@ -314,8 +314,10 @@ span.md {
 
 .md p {
     text-align: left;
-    display: flex;
     margin: 6px 0;
+}
+.md p:has(em.asterisk) {
+    display: flex;
 }
 
 .md ul {
