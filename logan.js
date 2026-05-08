@@ -295,10 +295,12 @@ span.md {
 
 /* ── Content within windows ── */
 .macos9-window-body .title {
-    font-size: 1.4em;
+    font-size: 1.4em !important;
     font-weight: bold;
-    text-align: center;
+    font-family: Palatino, 'Palatino Linotype', Georgia, serif !important;
+    text-align: left !important;
     margin-bottom: 2px;
+    padding-top: 0px !important;
 }
 
 .macos9-window-body .subtitle {
@@ -314,10 +316,15 @@ span.md {
 
 .md p {
     text-align: left;
-    margin: 6px 0;
+    margin: 12px 0;
 }
 .md p:has(em.asterisk) {
     display: flex;
+}
+
+.md hr {
+    border-color: #ccc;
+    border-width: 0.5px;
 }
 
 .md ul {
