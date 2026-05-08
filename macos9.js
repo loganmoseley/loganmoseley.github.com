@@ -6,6 +6,14 @@ window.markdeepOptions = {
 // Resolve assets relative to macos9.js itself, not the HTML file loading it
 const _base = new URL('.', document.currentScript.src).href;
 
+// Inject viewport meta early so browsers use it over Markdeep's width=600 version
+{
+    const meta = document.createElement('meta');
+    meta.name = 'viewport';
+    meta.content = 'width=device-width, initial-scale=1';
+    document.head.appendChild(meta);
+}
+
 // Public API — page-specific scripts call these after macos9:ready
 window.macos9 = {};
 
@@ -268,6 +276,8 @@ body {
     line-height: 20px;
     cursor: default;
     border-radius: 3px;
+    color: #000;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #menubar button:active {
