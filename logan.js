@@ -19,6 +19,12 @@ function createWindow(title) {
         </div>
         <div class="macos9-window-body"></div>
     `;
+    win.querySelector('button.zoom').addEventListener('click', () => {
+        win.classList.toggle('zoomed');
+    });
+    win.querySelector('button.collapse').addEventListener('click', () => {
+        win.classList.toggle('collapsed');
+    });
     return win;
 }
 
@@ -129,6 +135,13 @@ span.md {
 }
 
 /* ── Window chrome ── */
+.macos9-window.collapsed .macos9-window-body { display: none; }
+.macos9-window.zoomed {
+    max-width: none;
+    width: calc(100vw - 40px);
+    margin-left: calc(50% - 50vw + 20px);
+}
+
 .macos9-window {
     overflow: hidden;
     position: relative;
