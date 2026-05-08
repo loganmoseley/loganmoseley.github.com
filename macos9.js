@@ -3,6 +3,9 @@ window.markdeepOptions = {
     tocStyle: 'none'
 };
 
+// Resolve assets relative to macos9.js itself, not the HTML file loading it
+const _base = new URL('.', document.currentScript.src).href;
+
 // Public API — page-specific scripts call these after macos9:ready
 window.macos9 = {};
 
@@ -65,9 +68,30 @@ function makeDraggable(win) {
 }
 window.macos9.makeDraggable = makeDraggable;
 
-// ─── Finder-style icon window ─────────────────────────────────────────────────
+// ─── Finder-style icon grid ───────────────────────────────────────────────────
 //
 // files: [{ label, href, fold }]  — fold is the dog-ear color
+
+window.macos9.createFinderGrid = function(files) {
+    const grid = document.createElement('div');
+    grid.className = 'finder-icon-grid';
+    for (const f of files) {
+        const a = document.createElement('a');
+        a.className = 'finder-icon';
+        a.href = f.href;
+        a.innerHTML = `
+            <svg class="finder-doc-icon" width="40" height="48" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 2 L26 2 L38 14 L38 46 L2 46 Z" fill="white" stroke="#333" stroke-width="1.5"/>
+                <path d="M26 2 L26 14 L38 14" fill="${f.fold}" stroke="#333" stroke-width="1.5"/>
+            </svg>
+            <span class="finder-label">${f.label}</span>
+        `;
+        grid.appendChild(a);
+    }
+    return grid;
+};
+
+// ─── Finder-style icon window ─────────────────────────────────────────────────
 
 window.macos9.openFinderWindow = function(id, title, files) {
     const existing = document.getElementById(id);
@@ -88,22 +112,7 @@ window.macos9.openFinderWindow = function(id, title, files) {
     win.querySelector('button').addEventListener('click', () => win.remove());
 
     const body = win.querySelector('.macos9-window-body');
-    const grid = document.createElement('div');
-    grid.className = 'finder-icon-grid';
-    for (const f of files) {
-        const a = document.createElement('a');
-        a.className = 'finder-icon';
-        a.href = f.href;
-        a.innerHTML = `
-            <svg class="finder-doc-icon" width="40" height="48" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 2 L26 2 L38 14 L38 46 L2 46 Z" fill="white" stroke="#333" stroke-width="1.5"/>
-                <path d="M26 2 L26 14 L38 14" fill="${f.fold}" stroke="#333" stroke-width="1.5"/>
-            </svg>
-            <span class="finder-label">${f.label}</span>
-        `;
-        grid.appendChild(a);
-    }
-    body.appendChild(grid);
+    body.appendChild(window.macos9.createFinderGrid(files));
 
     makeDraggable(win);
     document.body.appendChild(win);
@@ -193,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
     obs.observe(document.body, { childList: true, subtree: true });
 
     const s = document.createElement('script');
-    s.src = 'markdeep.min.js';
+    s.src = _base + 'markdeep.min.js';
     s.charset = 'utf-8';
     document.body.appendChild(s);
 });
@@ -216,7 +225,7 @@ body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     background-color: #ccccff;
-    background-image: url(OS9_Default.png);
+    background-image: url(${_base}OS9_Default.png);
     background-repeat: repeat;
     background-attachment: fixed;
     display: flex;
