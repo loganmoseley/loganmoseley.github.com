@@ -43,10 +43,29 @@ function createWindow(title) {
 }
 window.macos9.createWindow = createWindow;
 
+// ─── Floating window z-index management ──────────────────────────────────────
+
+function nextFloatingZIndex() {
+    let max = 9999;
+    document.querySelectorAll('.macos9-window-floating').forEach(w => {
+        const z = parseInt(w.style.zIndex) || 0;
+        if (z > max) max = z;
+    });
+    return max + 1;
+}
+window.macos9.nextFloatingZIndex = nextFloatingZIndex;
+
+function bringToFront(win) {
+    win.style.zIndex = nextFloatingZIndex();
+}
+window.macos9.bringToFront = bringToFront;
+
 // ─── Draggable floating windows ───────────────────────────────────────────────
 
 function makeDraggable(win) {
     const titlebar = win.querySelector('.macos9-window-titlebar');
+
+    win.addEventListener('mousedown', () => bringToFront(win));
 
     titlebar.addEventListener('mousedown', e => {
         if (e.target.closest('button')) return;
@@ -114,7 +133,7 @@ window.macos9.openFinderWindow = function(id, title, files) {
         left:      '50%',
         transform: 'translate(-50%, -50%)',
         width:     '360px',
-        zIndex:    '10000',
+        zIndex:    nextFloatingZIndex(),
     });
 
     win.querySelector('button').addEventListener('click', () => win.remove());

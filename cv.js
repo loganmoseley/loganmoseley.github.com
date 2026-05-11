@@ -95,7 +95,7 @@ document.addEventListener('macos9:ready', () => {
                 left:      '50%',
                 transform: 'translate(-50%, -50%)',
                 width:     '260px',
-                zIndex:    '10000',
+                zIndex:    window.macos9.nextFloatingZIndex(),
             });
 
             win.querySelector('button').addEventListener('click', () => win.remove());
