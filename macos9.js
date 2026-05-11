@@ -46,7 +46,7 @@ window.macos9.createWindow = createWindow;
 // ─── Floating window z-index management ──────────────────────────────────────
 
 function nextFloatingZIndex() {
-    let max = 9999;
+    let max = 0;
     document.querySelectorAll('.macos9-window-floating').forEach(w => {
         const z = parseInt(w.style.zIndex) || 0;
         if (z > max) max = z;
@@ -74,16 +74,16 @@ function makeDraggable(win) {
         if (win.style.transform) {
             const r = win.getBoundingClientRect();
             win.style.transform = '';
-            win.style.left = r.left + 'px';
-            win.style.top  = r.top  + 'px';
+            win.style.left = (r.left + window.scrollX) + 'px';
+            win.style.top  = (r.top  + window.scrollY) + 'px';
         }
 
         const ox = e.clientX - win.getBoundingClientRect().left;
         const oy = e.clientY - win.getBoundingClientRect().top;
 
         const onMove = e => {
-            win.style.left = (e.clientX - ox) + 'px';
-            win.style.top  = (e.clientY - oy) + 'px';
+            win.style.left = (e.clientX - ox + window.scrollX) + 'px';
+            win.style.top  = (e.clientY - oy + window.scrollY) + 'px';
         };
         const onUp = () => {
             document.removeEventListener('mousemove', onMove);
@@ -128,9 +128,9 @@ window.macos9.openFinderWindow = function(id, title, files) {
     win.id = id;
     win.classList.add('macos9-window-floating');
     Object.assign(win.style, {
-        position:  'fixed',
-        top:       '50%',
-        left:      '50%',
+        position:  'absolute',
+        top:       (window.scrollY + window.innerHeight / 2) + 'px',
+        left:      (window.scrollX + window.innerWidth  / 2) + 'px',
         transform: 'translate(-50%, -50%)',
         width:     '360px',
         zIndex:    nextFloatingZIndex(),

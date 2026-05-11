@@ -90,9 +90,9 @@ document.addEventListener('macos9:ready', () => {
             win.id = id;
             win.classList.add('macos9-window-floating');
             Object.assign(win.style, {
-                position:  'fixed',
-                top:       '50%',
-                left:      '50%',
+                position:  'absolute',
+                top:       (window.scrollY + window.innerHeight / 2) + 'px',
+                left:      (window.scrollX + window.innerWidth  / 2) + 'px',
                 transform: 'translate(-50%, -50%)',
                 width:     '260px',
                 zIndex:    window.macos9.nextFloatingZIndex(),
