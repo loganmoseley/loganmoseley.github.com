@@ -78,6 +78,38 @@ em.underscore {
 // ─── CV-specific behaviors, wired up after macos9 builds the windows ──────────
 
 document.addEventListener('macos9:ready', () => {
+    const viewBtn = Array.from(document.querySelectorAll('#menubar-left button'))
+        .find(b => b.textContent === 'View');
+    if (viewBtn) {
+        viewBtn.addEventListener('click', () => {
+            const id = 'photo-window';
+            const existing = document.getElementById(id);
+            if (existing) { existing.style.display = ''; return; }
+
+            const win = window.macos9.createWindow('Logan Moseley');
+            win.id = id;
+            win.classList.add('macos9-window-floating');
+            Object.assign(win.style, {
+                position:  'fixed',
+                top:       '50%',
+                left:      '50%',
+                transform: 'translate(-50%, -50%)',
+                width:     '260px',
+                zIndex:    '10000',
+            });
+
+            win.querySelector('button').addEventListener('click', () => win.remove());
+
+            const img = document.createElement('img');
+            img.src = 'images/logan-dithered.jpg';
+            img.style.width = '100%';
+            win.querySelector('.macos9-window-body').appendChild(img);
+
+            window.macos9.makeDraggable(win);
+            document.body.appendChild(win);
+        });
+    }
+
     const resumeLink = document.querySelector('a[href="resume"]');
     if (!resumeLink) return;
 
