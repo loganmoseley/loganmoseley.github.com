@@ -33,6 +33,9 @@ function createWindow(title) {
         </div>
         <div class="macos9-window-body"></div>
     `;
+    win.querySelector('.macos9-window-titlebar').addEventListener('dblclick', () => {
+      win.classList.toggle('collapsed');
+    });
     win.querySelector('button.zoom').addEventListener('click', () => {
         win.classList.toggle('zoomed');
     });
